@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<main id="main">
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+        <div class="container">
+            {% for message in messages %}
+            <script>
+                    window.onload = function(){
+                        alert('{{message}}')
+                    }
+
+            </script>
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="title-single-box">
+                        <h1 class="title-single">Contact US</h1>
+                        <span class="color-text-a">Need to get in touch? No problem! You can use our contact form to
+                send us a message.<br>Feel free to contact us for any queries or suggestions. We are available for you 24/7.</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-lg-4">
+                    <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li aria-current="page" class="breadcrumb-item active">
+                                Contact
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Intro Single-->
+
+    <!-- ======= Contact Single ======= -->
+    <section class="contact">
+        <div class="container">
+            <div class="col-sm-12 section-t8" style="padding-top: 0px">
+                <div class="row">
+                    <div class="col-md-7">
+                        <form action="{% url 'contact' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <input class="form-control form-control-lg form-control-a" name="name"
+                                               placeholder="Your Name"
+                                               required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <input class="form-control form-control-lg form-control-a" name="from_email"
+                                               placeholder="Your Email"
+                                               required type="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <input class="form-control form-control-lg form-control-a" name="subject"
+                                               placeholder="Subject" required
+                                               type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" cols="45" name="message" placeholder="Message"
+                                                  required rows="8"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 my-3">
+                                    <div class="mb-3">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-a" type="submit">SEND MESSAGE</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-5 section-md-t3">
+                        <div class="icon-box section-b2">
+                            <div class="icon-box-icon">
+                                <span class="bi bi-envelope"></span>
+                            </div>
+                            <div class="icon-box-content table-cell">
+                                <div class="icon-box-title">
+                                    <h4 class="icon-title">Say Hello</h4>
+                                </div>
+                                <div class="icon-box-content">
+                                    <p class="mb-1">Email.
+                                        <span class="color-a">mailtohomefinder@gmail.com</span>
+                                    </p>
+                                    <p class="mb-1">Phone.
+                                        <span class="color-a"> +91 98982 25418</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="icon-box">
+                            <div class="icon-box-icon">
+                                <span class="bi bi-share"></span>
+                            </div>
+                            <div class="icon-box-content table-cell">
+                                <div class="icon-box-title">
+                                    <h4 class="icon-title">Social networks</h4>
+                                </div>
+                                <div class="icon-box-content">
+                                    <div class="socials-footer">
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <a class="link-one" href="#">
+                                                    <i aria-hidden="true" class="bi bi-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="link-one" href="#">
+                                                    <i aria-hidden="true" class="bi bi-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="link-one" href="#">
+                                                    <i aria-hidden="true" class="bi bi-instagram"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="link-one" href="#">
+                                                    <i aria-hidden="true" class="bi bi-linkedin"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Contact Single-->
+
+
+</main><!-- End #main -->
+{% endblock %}

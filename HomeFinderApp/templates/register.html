@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+.input-group-prepend span{
+    width: 50px;
+    min-height: calc(1.5em + 1rem + 2px);
+    padding: .5rem 1rem;
+    font-size: 1.25rem;
+    border-radius: .3rem;
+    background-color: #2eca6a;
+    color: black;
+    border:0 !important;
+}
+.input-group-prepend1 span{
+    width: 50px;
+    min-height: calc(1.5em + 1rem + 2px);
+    padding: .5rem 1rem;
+    font-size: 1.25rem;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    color: black;
+    cursor: pointer;
+    border-color: #2eca6a;
+    border-left: #fff;
+}
+
+</style>
+<main id="main">
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+        <div class="container">
+            {% for message in messages %}
+            <script>
+                    window.onload = function(){
+                        alert('{{message}}')
+                    }
+
+            </script>
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="title-single-box">
+                        <h1 class="title-single">Register</h1>
+                        <span class="color-text-a">Register here in order to avail more features.</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-lg-4">
+                    <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li aria-current="page" class="breadcrumb-item active">
+                                Register
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Intro Single-->
+
+    <!-- ======= Contact Single ======= -->
+    <section class="contact">
+        <div class="container">
+            <div class="col-sm-12 section-t8" style="padding-top: 0px">
+                <div class="row">
+                    <div class="col-md-7">
+                        <form action="{% url 'register' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="col-md-10 mb-4">
+                                <div class="form-group input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i
+                                                class="fas fa-user"> </i></span>
+                                    </div>
+                                    <input class="form-control" name="username"
+                                           placeholder="Username" required
+                                           type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-10 mb-4">
+                                <div class="form-group input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i
+                                                class="fas fa-envelope"> </i></span>
+                                    </div>
+                                    <input class="form-control" name="email"
+                                           placeholder="Email" required
+                                           type="email">
+                                </div>
+                            </div>
+                            <div class="col-md-10 mb-4">
+                                <div class="form-group input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i
+                                                class="fas fa-key"> </i></span>
+                                    </div>
+                                    <input class="form-control" id="password" name="password1" placeholder="Password"
+                                           required
+                                           title="Your password can’t be too similar to your other personal information,must contain at least 8 characters, can’t be a commonly used password, can’t be entirely numeric.  "
+                                           type="password">
+                                    <div class="input-group-prepend1">
+                                        <span class="input-group-text"><i class="bi bi-eye-slash"
+                                                                          id="togglePassword"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 my-4">
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="fas fa-key"> </i></span>
+                                    </div>
+                                    <input class="form-control" id="password2" name="password2"
+                                           placeholder="Confirm password" required
+                                           title="Please type similar password as above" type="password">
+                                    <div class="input-group-prepend1">
+                                        <span class="input-group-text"><i class="bi bi-eye-slash"
+                                                                          id="togglePassword2"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                const togglePassword = document.querySelector('#togglePassword');
+                                const password = document.querySelector('#password');
+                                togglePassword.addEventListener('click', function (e) {
+                                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                                    password.setAttribute('type', type);
+                                    this.classList.toggle('bi-eye');
+                                });
+
+                                const togglePassword2 = document.querySelector('#togglePassword2');
+                                const password2 = document.querySelector('#password2');
+                                togglePassword2.addEventListener('click', function (e) {
+                                    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+                                    password2.setAttribute('type', type);
+                                    this.classList.toggle('bi-eye');
+                                });
+
+                            </script>
+                            <div class="col-md-10 mb-4">
+                                <div class="form-group input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i
+                                                class="fas fa-phone"> </i></span>
+                                    </div>
+                                    <input class="form-control" name="phone" placeholder="Phone Number" required
+                                           type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-10 my-5">
+                                <div class="mb-5">
+                                </div>
+                            </div>
+
+                            <div class="col-md-10 text-center">
+                                <button class="btn btn-a" type="submit">REGISTER</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-5 section-md-t3">
+                        <div class="icon-box section-b2">
+                            <div class="icon-box-icon">
+                                <span class="bi bi-question-circle"></span>
+                            </div>
+                            <div class="icon-box-content table-cell">
+                                <div class="icon-box-title">
+                                    <h4 class="icon-title">Already Have an Account...</h4>
+                                </div>
+                                <div class="icon-box-content">
+                                    <p class="mb-1">Click Here to login directly:
+                                        <a class="color-a" href="{% url 'signin' %}">Login</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Contact Single-->
+
+</main><!-- End #main -->
+
+{% endblock %}

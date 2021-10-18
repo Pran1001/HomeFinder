@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<main id="main">
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+        <div class="container">
+            {% for message in messages %}
+                <script>
+                    window.onload = function(){
+                        alert('{{message}}')
+                    }
+                </script>
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="title-single-box">
+                        <h1 class="title-single">Post your Amazing Properties</h1>
+                        <span class="color-text-a">Post Property</span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li aria-current="page" class="breadcrumb-item active">
+                                Post Property
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Intro Single-->
+
+    <!-- ======= Post Property ======= -->
+    <section class="post_property">
+        <div class="container">
+            <div class="col-sm-14 section-t8" style="padding-top: 0px">
+                <div class="row">
+                    <div class="col-md-10">
+                        <form action='' method="POST" enctype='multipart/form-data'>
+                            {% csrf_token %}
+                            <div class="title-box-d">
+                                <h3 class="title-d">Property Details</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Property-ID</label>
+                                        <input class="form-control form-control-lg form-control-a" name="property_id"
+                                               placeholder="Property ID" required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Location</label>
+                                        <input class="form-control form-control-lg form-control-a" name="location"
+                                               placeholder="Location" required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Property Type</label>
+                                        <select class="form-control form-control-lg form-control-a"
+                                                name="property_type">
+                                            <option disabled selected>Select</option>
+                                            <option value="Residential">Residential</option>
+                                            <option value="Commercial">Commercial</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Status</label>
+                                        <select class="form-control form-control-lg form-control-a" name="status">
+                                            <option disabled selected>Select</option>
+                                            <option value="Sale">For Sale</option>
+                                            <option value="Rent">For Rent</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Area</label>
+                                        <input class="form-control form-control-lg form-control-a" name="area"
+                                               placeholder="Area in sq.mt"
+                                               required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Price</label>
+                                        <input class="form-control form-control-lg form-control-a" name="price"
+                                               placeholder="Price in ₹"
+                                               required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="col-form-label">Number of Bedrooms</label>
+                                    <select class="form-control form-control-lg form-control-a" name="beds">
+                                        <option disabled selected>Select</option>
+                                        <option value="0">00</option>
+                                        <option value="1">01</option>
+                                        <option value="2">02</option>
+                                        <option value="3">03</option>
+                                        <option value="4">04</option>
+                                        <option value="5">05</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Parking Slots</label>
+                                        <select class="form-control form-control-lg form-control-a" name="parking">
+                                        <option disabled selected>Select</option>
+                                        <option value="0">00</option>
+                                        <option value="1">01</option>
+                                        <option value="2">02</option>
+                                        <option value="3">03</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Property Description</label>
+                                        <textarea class="form-control" cols="45" name="property_des"
+                                                  placeholder="Property Description"
+                                                  required rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Choose Property Images</label>
+                                        <input accept=".jpeg,.jpg,.png"
+                                               class="form-control form-control-lg form-control-a"
+                                               multiple
+                                               name="imagefile" required title="Choose Property Images" type="file">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Choose Property Video</label>
+                                        <input accept=".video/mp4" class="form-control form-control-lg form-control-a"
+                                               name="videofile"
+                                               required title="Choose Property Video" type="file">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-3">
+                                    <div class="mb-3">
+                                    </div>
+                                </div>
+                            </div>
+<!--                            ====== Amenities Section======= -->
+                            <div class="title-box-d">
+                                <h3 class="title-d">Amenities</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="balcony" name="balcony"
+                                           type="checkbox">
+                                    <label class="btn btn-outline-primary" for="balcony">Balcony</label><br>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="security" name="security"
+                                           type="checkbox">
+                                    <label class="btn btn-outline-primary" for="security">24/7 Security</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="tv" name="tv" type="checkbox">
+                                    <label class="btn btn-outline-primary" for="tv">Cable TV</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="refrigerator" name="refrigerator"
+                                           type="checkbox">
+                                    <label class="btn btn-outline-primary" for="refrigerator">Refrigerator</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="modular_kitchen" name="modular_kitchen"
+                                           type="checkbox">
+                                    <label class="btn btn-outline-primary" for="modular_kitchen">Modular Kitchen</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="parking_area" name="parking_area"
+                                           type="checkbox">
+                                    <label class="btn btn-outline-primary" for="parking_area">Parking Area</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="power_backup" name="power_backup"
+                                           type="checkbox">
+                                    <label class="btn btn-outline-primary" for="power_backup">Power Backup</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="ac" name="ac" type="checkbox">
+                                    <label class="btn btn-outline-primary" for="ac">Air Conditioner</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="fit" name="fit" type="checkbox">
+                                    <label class="btn btn-outline-primary" for="fit">Fitness Facility</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="kids_area" name="kids_area"
+                                           type="checkbox">
+                                    <label class="btn btn-outline-primary" for="kids_area">Kid's Play Area</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="water" name="water" type="checkbox">
+                                    <label class="btn btn-outline-primary" for="water">24/7 Water Supply</label>
+                                </div>
+                                <div class="col-md-3 mb-3 ">
+                                    <input autocomplete="off" class="btn-check" id="bike" name="bike" type="checkbox">
+                                    <label class="btn btn-outline-primary" for="bike">Bike Racks</label>
+                                </div>
+                                <div class="col-md-12 my-3">
+                                    <div class="mb-3">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            ====== Contact Owner Section======= -->
+                            <div class="title-box-d">
+                                <h3 class="title-d">Contact Owner</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Name of Owner</label>
+                                        <input class="form-control form-control-lg form-control-a" name="name"
+                                               placeholder="Owner Name" required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Phone Number</label>
+                                        <input class="form-control form-control-lg form-control-a" name="phone_no"
+                                               placeholder="Phone No" required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Mobile Number</label>
+                                        <input class="form-control form-control-lg form-control-a" name="mobile_no"
+                                               placeholder="Mobile No"
+                                               required type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Email</label>
+                                        <input class="form-control form-control-lg form-control-a" name="email"
+                                               placeholder="Email"
+                                               required type="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Skype</label>
+                                        <input class="form-control form-control-lg form-control-a" name="skype"
+                                               placeholder="Skype"
+                                               required type="text">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Choose Profile Image</label>
+                                        <input class="form-control form-control-lg form-control-a"
+                                               name="owner_imagefile" required accept=".jpeg,.jpg,.png"
+                                               title="Choose Owner Profile Photo" type="file">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Describe Yourself</label>
+                                        <textarea class="form-control" cols="45" name="owner_des"
+                                                  placeholder="Owner Description"
+                                                  required rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 my-3">
+                                <div class="mb-3">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-a" type="submit">POST</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section><!-- End Post details-->
+</main>
+
+{% endblock %}
