@@ -8,8 +8,8 @@
             <div class="row">
                 <div class="col-md-12 col-lg-8">
                     <div class="title-single-box">
-                        <h1 class="title-single">Our Amazing Agents</h1>
-                        <span class="color-text-a">Grid Properties</span>
+                        <h1 class="title-single">Our Amazing Owners</h1>
+                        <span class="color-text-a">Our trustworthy owners</span>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-4">
@@ -42,7 +42,7 @@
                             <div class="card-header-d">
                                 <div class="card-title-d align-self-center">
                                     <h3 class="title-d">
-                                        <a class="link-two" href="{% url 'agent_single' %}">{{post.name}}</a>
+                                        <a class="link-two" href="{% url 'agent_single' post.id%}">{{post.name}}</a>
                                     </h3>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                                 <p class="content-d color-text-a">{{post.owner_des}}</p>
                                 <div class="info-agents color-a">
                                     <p>
-                                        <strong>Phone: </strong>+91 {{post.phone_no}}
+                                        <strong>Contact: </strong>+91 {{post.mobile_no}}
                                     </p>
                                     <p>
                                         <strong>Email: </strong>{{post.email}}

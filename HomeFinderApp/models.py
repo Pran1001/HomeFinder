@@ -6,6 +6,9 @@ class Account(models.Model):
     username = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=225, null=True)
     phone = models.CharField(max_length=10, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    token = models.CharField(max_length=150, null=True)
+    verify = models.BooleanField(default=False)
 
     def _str_(self):
         return self.username
@@ -28,10 +31,8 @@ class Post(models.Model):
     imagefile = models.FileField(upload_to="Images", null=True, blank=True)
     videofile = models.FileField(upload_to="Videos", null=True, blank=True)
     name = models.CharField(max_length=100, null=True)
-    phone_no = models.CharField(max_length=100, null=True)
-    mobile_no = models.CharField(max_length=100, null=True)
+    mobile_no = models.CharField(max_length=10, null=True)
     email = models.EmailField(max_length=100, null=True)
-    skype = models.CharField(max_length=100, null=True)
     owner_des = models.CharField(max_length=255, null=True)
     owner_imagefile = models.FileField(upload_to="ProfileImages", null=True, blank=True)
     balcony = models.CharField(max_length=5, null=True, blank=True)
@@ -52,3 +53,4 @@ class Post(models.Model):
 
     class Meta:
         db_table = "Post"
+

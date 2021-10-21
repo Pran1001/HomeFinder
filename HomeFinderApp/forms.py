@@ -9,6 +9,7 @@ class AccountForm(ModelForm):
     class Meta:
         model = Account
         fields = '__all__'
+        exclude = ('user', 'token', 'verify',)
 
 
 class UserForm(UserCreationForm):
@@ -29,3 +30,6 @@ class PostForm(ModelForm):
         model = Post
         fields = '__all__'
 
+
+class SearchForm(forms.Form):
+    filter_status_by = forms.CharField(widget = forms.Select)

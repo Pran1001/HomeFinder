@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib import messages, auth
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
@@ -14,13 +16,12 @@ from .models import *
 
 
 def index(request):
-    posts = Post.objects.all()
-    context = {'posts': posts}
-    return render(request, 'index.html',context)
+    return render(request, 'index.html')
 
 
 def signin(request):
     if request.user.is_authenticated:
+        messages.info(request, 'You are already Logged in !!')
         return redirect('home')
     else:
         if request.method == 'POST':
@@ -28,8 +29,15 @@ def signin(request):
             password = request.POST.get('password')
             user = auth.authenticate(request, username=username, password=password)
             if user is not None:
-                auth.login(request, user)
-                return redirect('home')
+                account = Account.objects.get(user=user)
+                if account.verify:
+                    auth.login(request, user)
+                    messages.info(request, 'Login Successful !!!')
+                    return redirect('home')
+                else:
+                    messages.info(request,
+                                  'Your account is not verified ,please check your email and verify your Account!!!')
+                    return redirect('signin')
             else:
                 messages.info(request, 'Invalid Credentials ! ! !')
                 return redirect('signin')
@@ -38,6 +46,7 @@ def signin(request):
 
 def register(request):
     if request.user.is_authenticated:
+        messages.info(request, 'You are currently logged in, To register a new user kindly logout from the system.')
         return redirect('home')
     else:
         form = AccountForm()
@@ -54,15 +63,38 @@ def register(request):
                 messages.info(request, message)
                 return redirect('register')
             if form.is_valid() and user_form.is_valid():
-                user_form.save()
-                form.save()
+                uid = uuid.uuid4()
+                new_user = user_form.save()
+                acc_form = form.save(commit=False)
+                acc_form.user = new_user
+                acc_form.token = uid
+                acc_form.save()
+                send_email_after_registration(new_user.email, uid)
+                messages.info(request, "Your Account Created Successful,to verify your account check email !!!")
                 return redirect('signin')
         context = {'form': form, 'user_form': user_form}
         return render(request, 'register.html', context)
 
 
+def send_email_after_registration(email, token):
+    subject = "Verify Email"
+    message = f'Hi Click on the link to verify your account http://127.0.0.1:8000/account_verify/{token}'
+    from_email = 'mailtohomefinder@gmail.com'
+    recipient_list = [email]
+    send_mail(subject=subject, message=message, from_email=from_email, recipient_list=recipient_list)
+
+
+def account_verify(request, token):
+    account = Account.objects.filter(token=token).first()
+    account.verify = True
+    account.save()
+    messages.info(request, "Your Account has been verified, you can login !!!")
+    return redirect('signin')
+
+
 def logout(request):
     auth.logout(request)
+    messages.info(request, 'You are Logged out Successfully ! ! !')
     return redirect('home')
 
 
@@ -84,10 +116,15 @@ def contact(request):
     return render(request, "contact.html", {'form': form})
 
 
-def agent_single(request):
+def agent_single(request, pk):
     if request.user.is_authenticated:
-        return render(request, 'agent_single.html')
+        post = Post.objects.get(id=pk)
+        user = post.user_id
+        property = Post.objects.get(user_id=user)
+        context = {'post': post, 'property': property}
+        return render(request, 'agent_single.html', context)
     else:
+        messages.info(request, 'Login to view more Details....')
         return render(request, 'signin.html')
 
 
@@ -95,43 +132,77 @@ def agents_grid(request):
     if request.user.is_authenticated:
         posts = Post.objects.all()
         context = {'posts': posts}
-        return render(request, 'agents_grid.html',context)
+        return render(request, 'agents_grid.html', context)
     else:
+        messages.info(request, 'Login to view more Owners....')
         return render(request, 'signin.html')
 
 
 def property_grid(request):
-    posts = Post.objects.all()
-    context = {'posts' : posts}
-    return render(request, 'property_grid.html', context)
-
-
-def property_single(request):
     if request.user.is_authenticated:
-        return render(request, 'property_single.html')
+        if request.method == 'GET':
+            form = ContactForm()
+        else:
+            form = SearchForm(request.POST)
+            if form.is_valid():
+                status_name = form.cleaned_data['filter_status_by']
+                if status_name == 'Rent':
+                    posts = Post.objects.filter(status='Rent')
+                    context = {'posts': posts}
+                    return render(request, 'property_grid.html', context)
+                elif status_name == 'Sale':
+                    posts = Post.objects.filter(status='Sale')
+                    context = {'posts': posts}
+                    return render(request, 'property_grid.html', context)
+                else:
+                    posts = Post.objects.all()
+                    context = {'posts': posts}
+                    return render(request, 'property_grid.html', context)
+        posts = Post.objects.all()
+        context = {'posts': posts}
+        return render(request, 'property_grid.html', context)
     else:
+        messages.info(request, 'Login to view more Details....')
+        return render(request, 'signin.html')
+
+
+def property_single(request, pk):
+    if request.user.is_authenticated:
+        post = Post.objects.get(id=pk)
+        context = {'post': post}
+        return render(request, 'property_single.html', context)
+    else:
+        messages.info(request, 'Login to view more Details....')
         return render(request, 'signin.html')
 
 
 def post_property(request):
-    form = PostForm()
-    username = request.user.username
-    user_obj = User.objects.get(username=username)
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.errors:
-            message = form.errors
-            messages.info(request, message)
-            return redirect('post_property')
-        if form.is_valid():
-            post_form = form.save(commit=False)
-            post_form.user = user_obj
-            post_form.save()
-            messages.info(request, 'Property Posted Successfully.')
-            return redirect('post_property')
-    property = Post.objects.all()
-    context = {'form': form, 'property': property}
-    return render(request, 'post_property.html', context)
+    if request.user.is_authenticated:
+        form = PostForm()
+        username = request.user.username
+        user_obj = User.objects.get(username=username)
+        if request.method == 'POST':
+            form = PostForm(request.POST, request.FILES)
+            property_id = request.POST.get('property_id')
+            if form.errors:
+                message = form.errors
+                messages.info(request, message)
+                return redirect('post_property')
+            if form.is_valid():
+                if len(property_id) == 15:
+                    post_form = form.save(commit=False)
+                    post_form.user = user_obj
+                    post_form.save()
+                    messages.info(request, 'Property Posted Successfully.')
+                    return redirect('post_property')
+                else:
+                    messages.info(request, 'Invalid Property Id')
+        property = Post.objects.all()
+        context = {'form': form, 'property': property}
+        return render(request, 'post_property.html', context)
+    else:
+        messages.info(request, 'Login to Post your own Property ..')
+        return render(request, 'signin.html')
 
 
 def about(request):
