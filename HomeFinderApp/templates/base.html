@@ -74,6 +74,8 @@
 
 
 
+
+
 </style>
 <body>
 
@@ -86,80 +88,85 @@
     </div>
     <span class="close-box-collapse right-boxed bi bi-x"></span>
     <div class="box-collapse-wrap form">
-        <form class="form-a">
+        <form action="{% url 'property_grid_search' %}" class="form-a" method="POST">
+            {% csrf_token %}
             <div class="row">
                 <div class="col-md-12 mb-2">
                     <div class="form-group">
-                        <label class="pb-2" for="Type" style="color:#2eca6a">Keyword</label>
-                        <input class="form-control form-control-lg form-control-a" placeholder="Keyword" type="text">
+                        <label class="pb-2" style="color:#2eca6a">Keyword</label>
+                        <input class="form-control form-control-lg form-control-a" name="keyword" placeholder="Keyword"
+                               type="text">
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
                     <div class="form-group mt-2">
-                        <label class="pb-2" for="Type" style="color:#2eca6a">Type</label>
-                        <select class="form-control form-select form-control-a" id="Type">
-                            <option>All Type</option>
-                            <option>For Rent</option>
-                            <option>For Sale</option>
-                            <option>Open House</option>
+                        <label class="pb-2" style="color:#2eca6a">Status</label>
+                        <select class="form-control form-select form-control-a" name="status">
+                            <option value="All" >All</option>
+                            <option value="Rent">For Rent</option>
+                            <option value="Sale">For Sale</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
                     <div class="form-group mt-2">
-                        <label class="pb-2" for="city" style="color:#2eca6a">City</label>
-                        <select class="form-control form-select form-control-a" id="city">
-                            <option>All City</option>
-                            <option>Mumbai</option>
-                            <option>Delhi</option>
-                            <option>Thane</option>
-                            <option>Pune</option>
+                        <label class="pb-2" style="color:#2eca6a">Type</label>
+                        <select class="form-control form-select form-control-a" name="types">
+                            <option value="All">All Type</option>
+                            <option value="Residential">Residential</option>
+                            <option value="Commercial">Commercial</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
                     <div class="form-group mt-2">
-                        <label class="pb-2" for="bedrooms" style="color:#2eca6a">Bedrooms</label>
-                        <select class="form-control form-select form-control-a" id="bedrooms">
+                        <label class="pb-2" style="color:#2eca6a">Bedrooms</label>
+                        <select class="form-control form-select form-control-a" name="bedroom">
                             <option>Any</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
                     <div class="form-group mt-2">
-                        <label class="pb-2" for="garages" style="color:#2eca6a">Garages</label>
-                        <select class="form-control form-select form-control-a" id="garages">
+                        <label class="pb-2" style="color:#2eca6a">Parking</label>
+                        <select class="form-control form-select form-control-a" name="parking">
                             <option>Any</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>04</option>
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
                     <div class="form-group mt-2">
-                        <label class="pb-2" for="bathrooms" style="color:#2eca6a">Bathrooms</label>
-                        <select class="form-control form-select form-control-a" id="bathrooms">
-                            <option>Any</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
+                        <label class="pb-2" style="color:#2eca6a">City</label>
+                        <select class="form-control form-select form-control-a" name="city">
+                            <option value="All">All City</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Navi Mumbai">Navi Mumbai</option>
+                            <option value="Thane">Thane</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Panvel">Panvel</option>
+                            <option value="Vasai">Vasai</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
                     <div class="form-group mt-2">
-                        <label class="pb-2" for="price" style="color:#2eca6a">Min Price</label>
-                        <select class="form-control form-select form-control-a" id="price">
-                            <option>Unlimite</option>
-                            <option>$50,000</option>
-                            <option>$100,000</option>
-                            <option>$150,000</option>
-                            <option>$200,000</option>
+                        <label class="pb-2" style="color:#2eca6a">Min Price</label>
+                        <select class="form-control form-select form-control-a" name="price">
+                            <option value="All" >Unlimited</option>
+                            <option value="10000">₹ 10000</option>
+                            <option value="12000">₹ 12000</option>
+                            <option value="15000">₹ 15000</option>
+                            <option value="20000">₹ 20000</option>
                         </select>
                     </div>
                 </div>

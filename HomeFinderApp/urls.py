@@ -13,9 +13,9 @@ urlpatterns = [
     path('agents_grid/', views.agents_grid, name='agents_grid'),
     path('agent_single/<int:pk>/', views.agent_single, name='agent_single'),
     path('property_grid/', views.property_grid, name='property_grid'),
+    path('property_grid_search/', views.property_grid_search, name='property_grid_search'),
     path('property_single/<int:pk>/', views.property_single, name='property_single'),
     path('post_property/', views.post_property, name='post_property'),
-    # path('property_single/', views.property_single, name='property_single'),
     path("password_reset/", views.password_reset_request, name="password_reset"),
 
 ]

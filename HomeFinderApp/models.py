@@ -21,6 +21,8 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     property_id = models.CharField(max_length=15, null=True)
     location = models.CharField(max_length=100, null=True)
+    add1 = models.CharField(max_length=100, null=True)
+    pincode = models.CharField(max_length=100, null=True)
     property_type = models.CharField(max_length=100, null=True)
     status = models.CharField(max_length=100, null=True)
     area = models.CharField(max_length=100, null=True)
@@ -48,8 +50,6 @@ class Post(models.Model):
     water = models.CharField(max_length=5, null=True, blank=True)
     bike = models.CharField(max_length=5, null=True, blank=True)
 
-    def _int_(self):
-        return self.property_id
 
     class Meta:
         db_table = "Post"

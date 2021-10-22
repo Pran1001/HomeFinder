@@ -118,6 +118,36 @@ def contact(request):
 
 def agent_single(request, pk):
     if request.user.is_authenticated:
+        if request.method == 'GET':
+            form = SearchForm()
+        else:
+            form = SearchForm(request.POST)
+            if form.is_valid():
+                status_name = form.cleaned_data['filter_status_by']
+                if status_name == 'Rent':
+                    try:
+                        post = Post.objects.get(id=pk)
+                        user = post.user_id
+                        property = Post.objects.get(user_id=user, status='Rent')
+                        context = {'post': post, 'property': property}
+                        return render(request, 'agent_single.html', context)
+                    except:
+                        messages.info(request, 'No Homes for rent are available from this owner.')
+                elif status_name == 'Sale':
+                    try:
+                        post = Post.objects.get(id=pk)
+                        user = post.user_id
+                        property = Post.objects.get(user_id=user, status='Sale')
+                        context = {'post': post, 'property': property}
+                        return render(request, 'agent_single.html', context)
+                    except:
+                        messages.info(request, 'No Homes for sale are available from this owner.')
+                else:
+                    post = Post.objects.get(id=pk)
+                    user = post.user_id
+                    property = Post.objects.get(user_id=user)
+                    context = {'post': post, 'property': property}
+                    return render(request, 'agent_single.html', context)
         post = Post.objects.get(id=pk)
         user = post.user_id
         property = Post.objects.get(user_id=user)
@@ -139,31 +169,52 @@ def agents_grid(request):
 
 
 def property_grid(request):
-    if request.user.is_authenticated:
-        if request.method == 'GET':
-            form = ContactForm()
-        else:
-            form = SearchForm(request.POST)
-            if form.is_valid():
-                status_name = form.cleaned_data['filter_status_by']
-                if status_name == 'Rent':
-                    posts = Post.objects.filter(status='Rent')
-                    context = {'posts': posts}
-                    return render(request, 'property_grid.html', context)
-                elif status_name == 'Sale':
-                    posts = Post.objects.filter(status='Sale')
-                    context = {'posts': posts}
-                    return render(request, 'property_grid.html', context)
-                else:
-                    posts = Post.objects.all()
-                    context = {'posts': posts}
-                    return render(request, 'property_grid.html', context)
-        posts = Post.objects.all()
-        context = {'posts': posts}
-        return render(request, 'property_grid.html', context)
+    if request.method == 'GET':
+        form = SearchForm()
     else:
-        messages.info(request, 'Login to view more Details....')
-        return render(request, 'signin.html')
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            status_name = form.cleaned_data['filter_status_by']
+            if status_name == 'Rent':
+                posts = Post.objects.filter(status='Rent')
+                context = {'posts': posts}
+                return render(request, 'property_grid.html', context)
+            elif status_name == 'Sale':
+                posts = Post.objects.filter(status='Sale')
+                context = {'posts': posts}
+                return render(request, 'property_grid.html', context)
+            else:
+                posts = Post.objects.all()
+                context = {'posts': posts}
+                return render(request, 'property_grid.html', context)
+    posts = Post.objects.all()
+    context = {'posts': posts}
+    return render(request, 'property_grid.html', context)
+
+
+def property_grid_search(request):
+    if request.method == 'GET':
+        form = FilterForm()
+    else:
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            keyword = form.cleaned_data['keyword']
+            status = form.cleaned_data['status']
+            types = form.cleaned_data['types']
+            bedroom = form.cleaned_data['bedroom']
+            parking = form.cleaned_data['parking']
+            city = form.cleaned_data['city']
+            price = form.cleaned_data['price']
+            print(keyword, status, types, bedroom, parking, city, price)
+            if keyword or status or types or bedroom or parking or city or price:
+                posts = Post.objects.filter(add1__icontains=keyword, property_des__icontains=keyword, status=status, property_type=types, beds=bedroom,
+                                            parking=parking, location=city, price__gte=price)
+                context = {'posts': posts}
+                return render(request, 'property_grid.html', context)
+        else:
+            posts = Post.objects.all()
+            context = {'posts': posts}
+            return render(request, 'property_grid.html', context)
 
 
 def property_single(request, pk):

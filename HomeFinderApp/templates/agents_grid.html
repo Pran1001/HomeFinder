@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12 col-lg-8">
                     <div class="title-single-box">
-                        <h1 class="title-single">Our Amazing Owners</h1>
+                        <h1 class="title-single">Our Owners</h1>
                         <span class="color-text-a">Our trustworthy owners</span>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
             <div class="row">
                 {% for post in posts %}
                 <div class="col-md-4">
-                    <div class="card-box-d">
+                    <div class="card-box-d h-100">
                         <div class="card-img-d">
                             <img alt="" class="img-d img-fluid" src="{{post.owner_imagefile.url}}">
                         </div>
@@ -87,33 +87,6 @@
                     </div>
                 </div>
                 {% endfor %}
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <nav class="pagination-a">
-                        <ul class="pagination justify-content-end">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">
-                                    <span class="bi bi-chevron-left"></span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item next">
-                                <a class="page-link" href="#">
-                                    <span class="bi bi-chevron-right"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
             </div>
         </div>
     </section><!-- End Agents Grid-->
