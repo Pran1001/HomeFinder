@@ -29,10 +29,10 @@
                         <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="#">Home</a>
+                                    <a href="{% url 'home' %}">Home</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Agents</a>
+                                    <a href="{% url 'agents_grid' %}">Owners</a>
                                 </li>
                                 <li aria-current="page" class="breadcrumb-item active">{{post.name}}</li>
                             </ol>
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="agent-avatar-box">
                                     <img alt="" class="agent-avatar img-fluid" src="{{post.owner_imagefile.url}}">
                                 </div>
@@ -76,22 +76,22 @@
                                     <div class="socials-footer">
                                         <ul class="list-inline">
                                             <li class="list-inline-item">
-                                                <a class="link-one" href="#">
+                                                <a class="link-one" href="">
                                                     <i aria-hidden="true" class="bi bi-facebook"></i>
                                                 </a>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a class="link-one" href="#">
+                                                <a class="link-one" href="">
                                                     <i aria-hidden="true" class="bi bi-twitter"></i>
                                                 </a>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a class="link-one" href="#">
+                                                <a class="link-one" href="">
                                                     <i aria-hidden="true" class="bi bi-instagram"></i>
                                                 </a>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a class="link-one" href="#">
+                                                <a class="link-one" href="">
                                                     <i aria-hidden="true" class="bi bi-linkedin"></i>
                                                 </a>
                                             </li>

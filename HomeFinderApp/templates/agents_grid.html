@@ -16,7 +16,7 @@
                     <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">Home</a>
+                                <a href="{% url 'home' %}">Home</a>
                             </li>
                             <li aria-current="page" class="breadcrumb-item active">
                                 Agents Grid
@@ -34,7 +34,7 @@
             <div class="row">
                 {% for post in posts %}
                 <div class="col-md-4">
-                    <div class="card-box-d h-100">
+                    <div class="card-box-d">
                         <div class="card-img-d">
                             <img alt="" class="img-d img-fluid" src="{{post.owner_imagefile.url}}">
                         </div>
@@ -50,10 +50,10 @@
                                 <p class="content-d color-text-a">{{post.owner_des}}</p>
                                 <div class="info-agents color-a">
                                     <p>
-                                        <strong>Contact: </strong>+91 {{post.mobile_no}}
+                                        <strong>Contact: </strong><br>+91 {{post.mobile_no}}
                                     </p>
                                     <p>
-                                        <strong>Email: </strong>{{post.email}}
+                                        <strong>Email: </strong><br>{{post.email}}
                                     </p>
                                 </div>
                             </div>
