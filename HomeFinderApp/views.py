@@ -126,26 +126,26 @@ def agent_single(request, pk):
                 status_name = form.cleaned_data['filter_status_by']
                 if status_name == 'Rent':
                     try:
-                        post = Post.objects.get(id=pk)
+                        post = Post.objects.filter(id=pk)
                         user = post.user_id
-                        property = Post.objects.get(user_id=user, status='Rent')
+                        property = Post.objects.filter(user_id=user, status='Rent')
                         context = {'post': post, 'property': property}
                         return render(request, 'agent_single.html', context)
                     except:
                         messages.info(request, 'No Homes for rent are available from this owner.')
                 elif status_name == 'Sale':
                     try:
-                        post = Post.objects.get(id=pk)
+                        post = Post.objects.filter(id=pk)
                         user = post.user_id
-                        property = Post.objects.get(user_id=user, status='Sale')
+                        property = Post.objects.filter(user_id=user, status='Sale')
                         context = {'post': post, 'property': property}
                         return render(request, 'agent_single.html', context)
                     except:
                         messages.info(request, 'No Homes for sale are available from this owner.')
                 else:
-                    post = Post.objects.get(id=pk)
+                    post = Post.objects.filter(id=pk)
                     user = post.user_id
-                    property = Post.objects.get(user_id=user)
+                    property = Post.objects.filter(user_id=user)
                     context = {'post': post, 'property': property}
                     return render(request, 'agent_single.html', context)
         post = Post.objects.get(id=pk)
@@ -271,11 +271,11 @@ def password_reset_request(request):
                     subject = "Password Reset Requested"
                     email_template_name = "PasswordResetEmail.txt"
                     c = {
-                        "email": user.email,
+                        'email': user.email,
                         'domain': '127.0.0.1:8000',
                         'site_name': 'HomeFinder',
-                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                        "user": user,
+                        'uid':  urlsafe_base64_encode(force_bytes(user.pk)),
+                        'user': user,
                         'token': default_token_generator.make_token(user),
                         'protocol': 'http',
                     }
