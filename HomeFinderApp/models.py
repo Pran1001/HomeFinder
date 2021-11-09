@@ -54,3 +54,9 @@ class Post(models.Model):
     class Meta:
         db_table = "Post"
 
+class PostImages(models.Model):
+    imagefile = models.FileField(upload_to="Images", null=True, blank=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        db_table = "PostImages"

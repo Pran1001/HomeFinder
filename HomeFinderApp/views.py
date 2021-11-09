@@ -126,7 +126,7 @@ def agent_single(request, pk):
                 status_name = form.cleaned_data['filter_status_by']
                 if status_name == 'Rent':
                     try:
-                        post = Post.objects.filter(id=pk)
+                        post = Post.objects.get(id=pk)
                         user = post.user_id
                         property = Post.objects.filter(user_id=user, status='Rent')
                         context = {'post': post, 'property': property}
@@ -135,7 +135,7 @@ def agent_single(request, pk):
                         messages.info(request, 'No Homes for rent are available from this owner.')
                 elif status_name == 'Sale':
                     try:
-                        post = Post.objects.filter(id=pk)
+                        post = Post.objects.get(id=pk)
                         user = post.user_id
                         property = Post.objects.filter(user_id=user, status='Sale')
                         context = {'post': post, 'property': property}
@@ -143,7 +143,7 @@ def agent_single(request, pk):
                     except:
                         messages.info(request, 'No Homes for sale are available from this owner.')
                 else:
-                    post = Post.objects.filter(id=pk)
+                    post = Post.objects.get(id=pk)
                     user = post.user_id
                     property = Post.objects.filter(user_id=user)
                     context = {'post': post, 'property': property}
@@ -198,7 +198,6 @@ def property_grid_search(request):
     else:
         form = FilterForm(request.POST)
         if form.is_valid():
-            keyword = form.cleaned_data['keyword']
             status = form.cleaned_data['status']
             types = form.cleaned_data['types']
             bedroom = form.cleaned_data['bedroom']
@@ -207,7 +206,7 @@ def property_grid_search(request):
             price = form.cleaned_data['price']
             print(keyword, status, types, bedroom, parking, city, price)
             if keyword or status or types or bedroom or parking or city or price:
-                posts = Post.objects.filter(add1__icontains=keyword, property_des__icontains=keyword, status=status, property_type=types, beds=bedroom,
+                posts = Post.objects.filter(status=status, property_type=types, beds=bedroom,
                                             parking=parking, location=city, price__gte=price)
                 context = {'posts': posts}
                 return render(request, 'property_grid.html', context)
@@ -220,7 +219,8 @@ def property_grid_search(request):
 def property_single(request, pk):
     if request.user.is_authenticated:
         post = Post.objects.get(id=pk)
-        context = {'post': post}
+        post1 = PostImages.objects.filter(post_id=pk)
+        context = {'post': post,'post1': post1}
         return render(request, 'property_single.html', context)
     else:
         messages.info(request, 'Login to view more Details....')
@@ -230,20 +230,32 @@ def property_single(request, pk):
 def post_property(request):
     if request.user.is_authenticated:
         form = PostForm()
+        image_form = ImageForm()
         username = request.user.username
         user_obj = User.objects.get(username=username)
         if request.method == 'POST':
             form = PostForm(request.POST, request.FILES)
+            image_form = ImageForm(request.POST, request.FILES)
+            images = request.FILES.getlist('imagefile')
+            print(images)
             property_id = request.POST.get('property_id')
             if form.errors:
                 message = form.errors
                 messages.info(request, message)
                 return redirect('post_property')
-            if form.is_valid():
-                if len(property_id) == 15:
+            if image_form.errors:
+                message = image_form.errors
+                messages.info(request, message)
+                return redirect('post_property')
+            print(form.is_valid())
+            print(image_form.is_valid())
+            if form.is_valid() and image_form.is_valid():
+                if len(property_id) > 1:
                     post_form = form.save(commit=False)
                     post_form.user = user_obj
-                    post_form.save()
+                    post = form.save()
+                    for image in images:
+                        PostImages.objects.create(imagefile=image, post=post)
                     messages.info(request, 'Property Posted Successfully.')
                     return redirect('post_property')
                 else:
@@ -274,7 +286,7 @@ def password_reset_request(request):
                         'email': user.email,
                         'domain': '127.0.0.1:8000',
                         'site_name': 'HomeFinder',
-                        'uid':  urlsafe_base64_encode(force_bytes(user.pk)),
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'user': user,
                         'token': default_token_generator.make_token(user),
                         'protocol': 'http',

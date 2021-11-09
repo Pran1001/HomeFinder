@@ -91,13 +91,6 @@
         <form action="{% url 'property_grid_search' %}" class="form-a" method="POST">
             {% csrf_token %}
             <div class="row">
-                <div class="col-md-12 mb-2">
-                    <div class="form-group">
-                        <label class="pb-2" style="color:#2eca6a">Keyword</label>
-                        <input class="form-control form-control-lg form-control-a" name="keyword" placeholder="Keyword"
-                               type="text">
-                    </div>
-                </div>
                 <div class="col-md-6 mb-2">
                     <div class="form-group mt-2">
                         <label class="pb-2" style="color:#2eca6a">Status</label>
@@ -122,7 +115,7 @@
                     <div class="form-group mt-2">
                         <label class="pb-2" style="color:#2eca6a">Bedrooms</label>
                         <select class="form-control form-select form-control-a" name="bedroom">
-                            <option>Any</option>
+                            <option value="All">Any</option>
                             <option value="0">00</option>
                             <option value="1">01</option>
                             <option value="2">02</option>
@@ -136,7 +129,7 @@
                     <div class="form-group mt-2">
                         <label class="pb-2" style="color:#2eca6a">Parking</label>
                         <select class="form-control form-select form-control-a" name="parking">
-                            <option>Any</option>
+                            <option value="All">Any</option>
                             <option value="0">00</option>
                             <option value="1">01</option>
                             <option value="2">02</option>

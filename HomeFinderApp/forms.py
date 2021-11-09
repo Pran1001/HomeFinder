@@ -30,12 +30,16 @@ class PostForm(ModelForm):
         model = Post
         fields = '__all__'
 
+class ImageForm(ModelForm):
+    class Meta:
+        model = PostImages
+        fields = ("imagefile",)
+
 
 class SearchForm(forms.Form):
     filter_status_by = forms.CharField(widget = forms.Select)
 
 class FilterForm(forms.Form):
-    keyword= forms.CharField(max_length=50, required=False)
     status = forms.CharField(widget = forms.Select, required=False)
     types = forms.CharField(widget = forms.Select, required=False)
     bedroom = forms.CharField(widget = forms.Select, required=False)
