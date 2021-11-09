@@ -204,8 +204,8 @@ def property_grid_search(request):
             parking = form.cleaned_data['parking']
             city = form.cleaned_data['city']
             price = form.cleaned_data['price']
-            print(keyword, status, types, bedroom, parking, city, price)
-            if keyword or status or types or bedroom or parking or city or price:
+            print(status, types, bedroom, parking, city, price)
+            if status or types or bedroom or parking or city or price:
                 posts = Post.objects.filter(status=status, property_type=types, beds=bedroom,
                                             parking=parking, location=city, price__gte=price)
                 context = {'posts': posts}
