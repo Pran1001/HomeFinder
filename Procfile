@@ -1,1 +1,1 @@
-web: gunicorn HomeFinder.wsgi
+web: gunicorn HOMEFINDER.wsgi
