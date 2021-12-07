@@ -1,1 +1,1 @@
-web: gunicorn HOMEFINDER.wsgi --log-file - 
+web: gunicorn HOMEFINDER.wsgi
