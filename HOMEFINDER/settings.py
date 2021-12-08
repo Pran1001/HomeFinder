@@ -133,14 +133,13 @@ if DEBUG:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static')]
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'img')
-MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
+MEDIA_ROOT = os.path.join(BASE_DIR, 'img')
 
 MEDIA_URL = '/img/'
 
